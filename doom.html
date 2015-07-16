@@ -2,53 +2,52 @@
 <html>
     <head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-		<script>
-            (function() {
-                var Zzuf = {
-                    cipherDecimal: [33,125],
-                    scramble: function(text) {
-                        $("body").empty();
-                        
-                        var row = 100;
-                        var seed = Math.ceil(text.length/4);
-                        var space = [];
-                        var length = 0;
-                        
-                        space.push(Math.abs(seed));
-                        space.push(4);
-                        
-                        for(i = 0; i <= text.length; i++) {
-                            if (i == 0) 
-                                $("body").append($("<span hidden/>").text(text.charAt(i)));
-                            else {
-                                length = Math.floor(Math.random() * (space[0] - space[1] + 1)) + space[1];
-                                for( j = 0; j <= length; j++) {
-                                    if (row == 0) {
-                                        $("body").append($("<br/>"));
-                                        row = 100;
-                                    } else
-                                        row--;
-                                 
-                                    var rCode = Math.floor(Math.random() * (this.cipherDecimal[1] - this.cipherDecimal[0] + 1)) + this.cipherDecimal[0];
-                                    $("body").append($("<span />").text(String.fromCharCode(rCode)));
-                                }
-                                $("body").append($("<span hidden/>").text(text.charAt(i)));
-                            }     
-                        }
-
-                        return this;
-                    },
-                    unscramble: function() {
-                        var message = [];
-                        $("body span:hidden").each(function(i,obj) {
-                            //Helper to see hidden spans with entire payload
-                            //$(obj).removeAttr('hidden').css({'font-weight': 'bold', 'font-size': '15px'});
-                            message.push($(obj).text());
-                        });
-                        console.log('Hidden: ' + message.join(""));
+        <script>
+            var Zzuf = {
+                cipherDecimal: [33,125],
+                scramble: function(text) {
+                    $("body").empty();
+                    
+                    var row = 100;
+                    var seed = Math.ceil(text.length/4);
+                    var space = [];
+                    var length = 0;
+                    
+                    space.push(Math.abs(seed));
+                    space.push(4);
+                    
+                    for(i = 0; i <= text.length; i++) {
+                        if (i == 0) 
+                            $("body").append($("<span hidden/>").text(text.charAt(i)));
+                        else {
+                            length = Math.floor(Math.random() * (space[0] - space[1] + 1)) + space[1];
+                            for( j = 0; j <= length; j++) {
+                                if (row == 0) {
+                                    $("body").append($("<br/>"));
+                                    row = 100;
+                                } else
+                                    row--;
+                             
+                                var rCode = Math.floor(Math.random() * (this.cipherDecimal[1] - this.cipherDecimal[0] + 1)) + this.cipherDecimal[0];
+                                $("body").append($("<span />").text(String.fromCharCode(rCode)));
+                            }
+                            $("body").append($("<span hidden/>").text(text.charAt(i)));
+                        }     
                     }
-                };
 
+                    return this;
+                },
+                unscramble: function() {
+                    var message = [];
+                    $("body span:hidden").each(function(i,obj) {
+                        //Helper to see hidden spans with entire payload
+                        //$(obj).removeAttr('hidden').css({'font-weight': 'bold', 'font-size': '15px'});
+                        message.push($(obj).text());
+                    });
+                    console.log('Hidden: ' + message.join(""));
+                }
+            };
+            (function() {
                 $(document).ready(function() {
                     var message = 'Elegantly unscramble this message using the space provided. Then write the scrambler that made it. The answer is an object with global scope that can scramble and unscramble any text any number of times.';
                     var messageTwo = 'This is a test of a new scrambler.';
