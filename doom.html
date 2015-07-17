@@ -10,12 +10,12 @@
                         $("body").empty();
                         
                         var row = 100;
-                        var seed = Math.ceil(text.length/4);
                         var space = [];
                         var length = 0;
-                        
-                        space.push(Math.abs(seed));
-                        space.push(4);
+                        var distance = [4,100];
+
+                        space.push(distance[0]);
+                        space.push(distance[1]);
                         
                         for(i = 0; i <= text.length; i++) {
                             if (i == 0) 
